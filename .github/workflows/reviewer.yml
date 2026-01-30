@@ -1,0 +1,68 @@
+name: Reviewer Agent
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        env:
+          AGENT_REPO_URL: ${{ secrets.AGENT_REPO_URL || vars.AGENT_REPO_URL }}
+          AGENT_REPO_REF: ${{ secrets.AGENT_REPO_REF || vars.AGENT_REPO_REF }}
+        run: |
+          if [ -z "$AGENT_REPO_URL" ]; then
+            echo "AGENT_REPO_URL is required (set as secret or repo variable)."
+            exit 1
+          fi
+          if [ -n "$AGENT_REPO_REF" ]; then
+            pip install "git+$AGENT_REPO_URL@$AGENT_REPO_REF"
+          else
+            pip install "git+$AGENT_REPO_URL"
+          fi
+
+      - name: Ruff
+        id: ruff
+        continue-on-error: true
+        run: |
+          ruff check .
+
+      - name: Pytest
+        id: pytest
+        continue-on-error: true
+        run: |
+          pytest
+
+      - name: Set CI status
+        run: |
+          if [ "${{ steps.ruff.outcome }}" = "failure" ] || [ "${{ steps.pytest.outcome }}" = "failure" ]; then
+            echo "CI_STATUS=failure" >> $GITHUB_ENV
+          else
+            echo "CI_STATUS=success" >> $GITHUB_ENV
+          fi
+
+      - name: Run Reviewer Agent
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CI_STATUS: ${{ env.CI_STATUS }}
+        run: |
+          reviewer-agent review --pr "$PR_NUMBER"

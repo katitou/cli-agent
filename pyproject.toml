@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "megashkola-coding-agents"
+version = "0.1.0"
+description = "MVP SDLC coding agents for GitHub Issues/PRs"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "MegaSchool", email = "devnull@example.com" }]
+license = { text = "MIT" }
+
+dependencies = [
+  "PyGithub>=2.3.0",
+  "GitPython>=3.1.43",
+  "typer>=0.12.3",
+  "requests>=2.32.0",
+]
+
+[project.optional-dependencies]
+dev = ["black>=24.4.2", "ruff>=0.5.5", "mypy>=1.10.0", "pytest>=8.2.2"]
+
+[project.scripts]
+code-agent = "megashkola_agent.cli:app"
+reviewer-agent = "megashkola_agent.reviewer_cli:app"
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-q"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.14",
+]
