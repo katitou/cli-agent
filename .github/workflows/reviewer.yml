@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   review:
+    environment: env
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

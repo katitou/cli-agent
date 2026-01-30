@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   run-agent:
+    environment: env
     if: github.event.issue != null && contains(github.event.issue.labels.*.name, 'agent')
     runs-on: ubuntu-latest
     steps:
