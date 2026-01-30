@@ -39,7 +39,7 @@ class CodeAgent:
 
     def run_once(self, issue_number: int) -> None:
         if not self.settings.github_token or not self.settings.github_repo:
-            raise RuntimeError("TOKEN and REPO are required")
+            raise RuntimeError("USER_ACCESS_TOKEN and TARGET_REPO are required")
 
         handle = get_repo(self.settings.github_token, self.settings.github_repo)
         issue = find_issue_by_number(handle.repo, issue_number)

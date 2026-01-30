@@ -16,8 +16,8 @@ uv venv .venv
 source .venv/bin/activate
 uv pip install -e .
 
-export TOKEN=...            # required
-export REPO=owner/repo      # required
+export USER_ACCESS_TOKEN=...            # required
+export TARGET_REPO=owner/repo      # required
 export BASE_BRANCH=main     # optional
 
 code-agent run-once --issue 1
@@ -30,7 +30,7 @@ docker-compose up -d
 ```
 
 The container runs the **poller** which periodically checks for new issues with the label `agent`. If the
-container is not started inside a git repo, the agent will clone `REPO` into a temp workspace.
+container is not started inside a git repo, the agent will clone `TARGET_REPO` into a temp workspace.
 
 ## GitHub Actions
 
@@ -41,8 +41,8 @@ Two workflows are included:
 
 ## Environment variables
 
-- `TOKEN` (required)
-- `REPO` (required, `owner/repo`)
+- `USER_ACCESS_TOKEN` (required)
+- `TARGET_REPO` (required, `owner/repo`)
 - `BASE_BRANCH` (default: `main`)
 - `AGENT_LABEL` (default: `agent`)
 - `REVIEWER_BOT_LOGIN` (optional; if unset, agent scans latest `STATUS:` comment)

@@ -34,7 +34,7 @@ def poll() -> None:
     """Poll for open issues with the agent label and process them."""
     settings = load_settings()
     if not settings.github_token or not settings.github_repo:
-        raise typer.BadParameter("TOKEN and REPO are required")
+        raise typer.BadParameter("USER_ACCESS_TOKEN and TARGET_REPO are required")
 
     handle = get_repo(settings.github_token, settings.github_repo)
     agent = CodeAgent(settings)

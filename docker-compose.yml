@@ -2,8 +2,8 @@ services:
   code-agent:
     build: .
     environment:
-      - TOKEN=${TOKEN}
-      - REPO=${REPO}
+      - USER_ACCESS_TOKEN=${USER_ACCESS_TOKEN}
+      - TARGET_REPO=${TARGET_REPO}
       - BASE_BRANCH=${BASE_BRANCH:-main}
       - AGENT_LABEL=${AGENT_LABEL:-agent}
       - LLM_PROVIDER=${LLM_PROVIDER:-}

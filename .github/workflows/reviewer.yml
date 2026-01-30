@@ -61,8 +61,8 @@ jobs:
 
       - name: Run Reviewer Agent
         env:
-          TOKEN: ${{ secrets.TOKEN || secrets.TOKEN }}
-          REPO: ${{ secrets.REPO || secrets.REPO }}
+          USER_ACCESS_TOKEN: ${{ secrets.USER_ACCESS_TOKEN || secrets.USER_ACCESS_TOKEN }}
+          TARGET_REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           CI_STATUS: ${{ env.CI_STATUS }}
         run: |
