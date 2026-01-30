@@ -2,9 +2,9 @@ services:
   code-agent:
     build: .
     environment:
-      - GITHUB_TOKEN=${GITHUB_TOKEN}
-      - GITHUB_REPO=${GITHUB_REPO}
-      - GITHUB_BASE_BRANCH=${GITHUB_BASE_BRANCH:-main}
+      - TOKEN=${TOKEN}
+      - REPO=${REPO}
+      - BASE_BRANCH=${BASE_BRANCH:-main}
       - AGENT_LABEL=${AGENT_LABEL:-agent}
       - LLM_PROVIDER=${LLM_PROVIDER:-}
       - LLM_API_KEY=${LLM_API_KEY:-}

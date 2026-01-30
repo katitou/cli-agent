@@ -17,9 +17,9 @@ class Settings:
 
 def load_settings() -> Settings:
     return Settings(
-        github_token=os.getenv("GITHUB_TOKEN", ""),
-        github_repo=os.getenv("GITHUB_REPO", ""),
-        base_branch=os.getenv("GITHUB_BASE_BRANCH", "main"),
+        github_token=os.getenv("TOKEN", ""),
+        github_repo=os.getenv("REPO", ""),
+        base_branch=os.getenv("BASE_BRANCH", "main"),
         agent_label=os.getenv("AGENT_LABEL", "agent"),
         reviewer_bot_login=os.getenv("REVIEWER_BOT_LOGIN", ""),
         llm_provider=os.getenv("LLM_PROVIDER", ""),

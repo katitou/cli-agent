@@ -15,7 +15,7 @@ app = typer.Typer(no_args_is_help=True)
 def review(pr: int | None = typer.Option(None, "--pr", "-p")) -> None:
     settings = load_settings()
     if not settings.github_token or not settings.github_repo:
-        raise typer.BadParameter("GITHUB_TOKEN and GITHUB_REPO are required")
+        raise typer.BadParameter("TOKEN and REPO are required")
 
     pr_number = pr or pr_number_from_event() or int(os.getenv("PR_NUMBER", "0"))
     if not pr_number:
