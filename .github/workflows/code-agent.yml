@@ -49,7 +49,7 @@ jobs:
       - name: Run Code Agent
         env:
           TOKEN: ${{ secrets.TOKEN }}
-          REPO: ${{ github.repository }}
+          REPO: ${{ secrets.REPO }}
           BASE_BRANCH: ${{ github.event.repository.default_branch }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
