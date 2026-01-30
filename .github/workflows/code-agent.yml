@@ -53,4 +53,12 @@ jobs:
           BASE_BRANCH: ${{ github.event.repository.default_branch }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
+          if [ -z "$USER_ACCESS_TOKEN" ]; then
+            echo "USER_ACCESS_TOKEN is required (set as secret or repo variable)."
+            exit 1
+          fi
+          if [ -z "$TARGET_REPO" ]; then
+            echo "TARGET_REPO is required (set as secret or repo variable)."
+            exit 1
+          fi
           code-agent run-once --issue "$ISSUE_NUMBER"
